@@ -3614,31 +3614,20 @@ def get_reviews():
 def upload_profpic(user_id):
     
     img_type = request.form['img_type']
-    file1 = request.files['image']
+    file = request.files['image']
     tempid = random.randint(1, 200)
     
-    msg = cloudinary_upload(user_id, img_type, file1, tempid, allowed_file, app_dump, Images)
+    msg = cloudinary_upload(user_id, img_type, file, tempid, allowed_file, app_dump, Images)
     uploaded = Images.query.filter_by(acc_id = user_id).first()
     return jsonify({'msg':msg,'id':uploaded.acc_id,'img':uploaded.img})
-    # if uploaded is None:
-    #     uploaded.acc_id = user_id
-    #     uploaded.img_type = img_type
-    # else:
-    #     uploaded.img_type = img_type
-
-    # if msg == "ok":
-    #     return jsonify({'message': 'upload complete'})
-    # else:
-    #     print(msg)
-    #     return jsonify({'message': 'upload failed'})
 
 @app.route('/user/info/<user_id>/photo', methods=['GET'])
 def show_profpic(user_id):
-    
+
     user = Images.query.filter_by(acc_id=user_id).first()
-    
     if not user:
         return make_response('no user found!')
-
+    if user.img is None:
+        return jsonify({'img': 'https://res.cloudinary.com/dal7ygjnn/image/upload/v1558839529/ov1akhxntwxpy13rzggs.gif'})
     return jsonify({'img': user.img})
 

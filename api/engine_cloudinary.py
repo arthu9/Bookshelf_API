@@ -14,7 +14,7 @@ from models import *
 #then after the upload is successful, the temporary directory that was made will be remove from the app folder
 
 
-def cloudinary_upload(acc_id, img_type, file1, tempid, allowed_file, curr_folder, modelClass):
+def cloudinary_upload(acc_id, img_type, file, tempid, allowed_file, curr_folder, modelClass):
 	cloud = cloudinary.config(
 		cloud_name = 'dal7ygjnn',
 		api_key = '244339543685643',
@@ -26,9 +26,9 @@ def cloudinary_upload(acc_id, img_type, file1, tempid, allowed_file, curr_folder
 
 	file_rename = ""
 	msg = "not ok"
-	if file1 and allowed_file(file1.filename):
+	if file and allowed_file(file.filename):
 		#we need to secure the filename first
-		filename1 = secure_filename(file1.filename)
+		filename = secure_filename(file.filename)
 	
 
 		#make a current path
@@ -39,20 +39,20 @@ def cloudinary_upload(acc_id, img_type, file1, tempid, allowed_file, curr_folder
 			os.makedirs(curr_path)
 
 		#save the file somewhere on our app
-		file1.save(os.path.join(curr_path, filename1))
+		file.save(os.path.join(curr_path, filename))
 
 		#the upload function - upload(file, **options)
-		uploading1 = upload(curr_path+'/'+filename1, **options)
+		uploading = upload(curr_path+'/'+filename, **options)
 
 	
 
-		exist = Images.query.filter_by(acc_id = acc_id).filter_by(story_id = story_id).first()
+		exist = Images.query.filter_by(acc_id = acc_id).first()
 
 		if exist:
 			
-			exist.img = uploading1['url']
+			exist.img = uploading['url']
 		else:
-			instance_ = modelClass(acc_id, img_type, story_id, img = uploading1['url'],)
+			instance_ = modelClass(acc_id, img_type, story_id, img = uploading['url'],)
 			db.session.add(instance_)
 			
 		db.session.commit()
