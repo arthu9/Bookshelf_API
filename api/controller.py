@@ -22,4 +22,4 @@ available_extension = set(['png', 'jpg', 'PNG', 'JPG', 'mp3', 'm4a', 'flac', 'aa
 
 def allowed_file(filename):
     return '.' in filename and \
-           filename.rsplit('.', 1)[1] in available_extension
+		filename.rsplit('.', 1)[1] in available_extension

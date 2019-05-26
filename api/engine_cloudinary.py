@@ -15,7 +15,7 @@ from models import *
 
 
 def cloudinary_upload(acc_id, img_type, file, tempid, allowed_file, curr_folder, modelClass):
-	cloudinary.config(
+	cloud = cloudinary.config(
 		cloud_name = 'dal7ygjnn',
 		api_key = '244339543685643',
 		api_secret = 'RPexuXeKVA5vxXJoO6_w7LcY7NI'
@@ -26,40 +26,43 @@ def cloudinary_upload(acc_id, img_type, file, tempid, allowed_file, curr_folder,
 
 	file_rename = ""
 	msg = "not ok"
-	if file and allowed_file(file.filename):
-		#we need to secure the filename first
-		filename = secure_filename(file.filename)
+	result = upload(filename, **options)
+	print(result)
+	# if file and allowed_file(file.filename):
+	# 	#we need to secure the filename first
+	# 	filename = secure_filename(file.filename)
 	
 
-		#make a current path
-		curr_path = curr_folder+'/'+str(tempid)
+	# 	#make a current path
+	# 	curr_path = curr_folder+'/'+str(tempid)
 
-		#check that path
-		if os.path.isdir(curr_path)==False:
-			os.makedirs(curr_path)
+	# 	#check that path
+	# 	if os.path.isdir(curr_path)==False:
+	# 		os.makedirs(curr_path)
 
-		#save the file somewhere on our app
-		file.save(os.path.join(curr_path, filename))
+	# 	#save the file somewhere on our app
+	# 	file.save(os.path.join(curr_path, filename))
 
-		#the upload function - upload(file, **options)
-		uploading = upload(curr_path+'/'+filename, **options)
+	# 	#the upload function - upload(file, **options)
+	# 	uploading = upload(curr_path+'/'+filename, **options)
+		
 
 	
 
-		exist = Images.query.filter_by(acc_id = acc_id).filter_by(story_id = story_id).first()
+	# 	exist = Images.query.filter_by(acc_id = acc_id).filter_by(story_id = story_id).first()
 
-		if exist:
+	# 	if exist:
 			
-			exist.img = uploading['url']
-		else:
-			instance_ = modelClass(acc_id, img_type, story_id, img = uploading['url'],)
-			db.session.add(instance_)
+	# 		exist.img = uploading['url']
+	# 	else:
+	# 		instance_ = modelClass(acc_id, img_type, story_id, img = uploading['url'],)
+	# 		db.session.add(instance_)
 			
-		db.session.commit()
-		msg = "ok"
-		#remove the directory we have created
-		shutil.rmtree(curr_path)
+	# 	db.session.commit()
+	# 	msg = "ok"
+	# 	#remove the directory we have created
+	# 	shutil.rmtree(curr_path)
 
-		#returns the cloudinary url and msg
-		return  msg
-	return None, msg
+	# 	#returns the cloudinary url and msg
+	# 	return  msg
+	# return None, msg

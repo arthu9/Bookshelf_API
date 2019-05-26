@@ -16,6 +16,7 @@ from models import *
 from controller import *
 from engine_cloudinary import *
 import errno
+import sys
 
 auth = HTTPBasicAuth()
 
@@ -3611,10 +3612,10 @@ def get_reviews():
 
 @app.route('/user/info/<user_id>/upload', methods=['POST'])
 def upload_profpic(user_id):
-    data = request.get_data()
+    data = request.files.to_dict()
     user_id = user_id
     img_type = 'jpg'
-    file = data['image']
+    file = data
     tempid = random.randint(1, 200)
     
     msg = cloudinary_upload(user_id, img_type, file, tempid, allowed_file, app_dump, Images)
@@ -3622,10 +3623,14 @@ def upload_profpic(user_id):
     if uploaded is None:
         uploaded.acc_id = user_id
         uploaded.img_type = img_type
-        uploaded.img = msg
     else:
         uploaded.img_type = img_type
-        uploaded.img = msg
+
+    if msg == "ok":
+        return jsonify({'message': 'upload complete'})
+    else:
+        print(msg)
+        return jsonify({'message': 'upload failed'})
 
 @app.route('/user/info/<user_id>/photo', methods=['GET'])
 def show_profpic(user_id):
