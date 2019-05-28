@@ -99,32 +99,11 @@ def update_profile(user_id):
     if not user:
         return make_response('no user found!')
 
-    if data['first_name'] == "":
-        user.first_name = data['first_name']
-    else:
-        user.first_name = user.first_name
-    if data['last_name'] == "":
-        user.last_name = data['last_name']
-    else:
-        user.last_name = user.last_name
-    if data['gender'] == "":
-        user.gender = data['gender']
-    else:
-        user.gender = user.gender
-    if data['contact_number'] == "":
-        user.contact_number = data['contact_number']
-    else:
-        user.contact_number = user.contact_number
-    if data['address'] == "":
-        user.address = data['address']
-    else:
-        user.address = user.address
-
-    # user.first_name = data['first_name']
-    # user.last_name = data['last_name']
-    # user.contact_number = data['contact_number']
-    # user.gender = data['gender']
-    # user.address = data['address']
+    user.first_name = data['first_name']
+    user.last_name = data['last_name']
+    user.contact_number = data['contact_number']
+    user.gender = data['gender']
+    user.address = data['address']
     user.longitude = 50
     user.latitude = 50
     db.session.commit()
