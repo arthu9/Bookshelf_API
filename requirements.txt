@@ -18,7 +18,7 @@ SQLAlchemy-Paginator==0.1
 SQLAlchemy-Searchable==1.0.3
 SQLAlchemy-Utils==0.33.1
 WTForms==2.1
-Werkzeug==0.14.1
+Werkzeug==0.15.3
 typing==3.6.4
 cryptography==1.7.2
 decorator==4.2.1
