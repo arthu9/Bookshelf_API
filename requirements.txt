@@ -25,7 +25,7 @@ decorator==4.2.1
 itsdangerous==0.24
 psycopg2==2.7.4
 validators==0.12.1
-Flask_Cors==3.0.3
+Flask_Cors==3.0.9
 openlibrary_api==0.1.0
 openlibrary==0.0.1
 jsonpickle==0.9.6
