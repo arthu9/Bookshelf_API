@@ -10,7 +10,7 @@ Flask-SQLAlchemy==2.3.2
 Flask-Script==2.0.6
 Flask-WTF==0.14.2
 Jinja2==2.10
-PyJWT==1.6.1
+PyJWT==2.4.0
 PyMySQL==0.8.0
 PySocks==1.6.8
 SQLAlchemy==1.2.5
